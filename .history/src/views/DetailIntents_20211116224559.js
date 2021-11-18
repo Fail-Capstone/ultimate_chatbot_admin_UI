@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, NavLink } from "react-router-dom";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from 'draft-js';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
-
-// import { Editor, EditorState } from "draft-js";
-// import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const DetailIntents = () => {
     const [detailIntent, setDetailIntents] = useState({
@@ -44,6 +43,7 @@ const DetailIntents = () => {
             ...prevState,
             [e.target.name]: e.target.value.split(","),
         }));
+        console.log(detailIntent.patterns);
     };
     const handleChangeResponse = (e) => {
         setDetailIntents((prevState) => ({
@@ -59,7 +59,6 @@ const DetailIntents = () => {
             alert("Intent not updated");
         }
     };
-
     const ChangeToSlug = (text) => {
         var slug;
         slug = text.toLowerCase();
@@ -107,13 +106,16 @@ const DetailIntents = () => {
                 onFocus={handleChangeTag}
             />
             <label htmlFor="patterns">Patterns</label>
-            <textarea
+            <Editor
+                editorState={detailIntent.patterns}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
                 cols="30"
                 rows="10"
                 name="patterns"
-                value={detailIntent.patterns}
-                onChange={handleChangePattern}
-            ></textarea>
+                onEditorStateChange={handleChangePattern}
+            ></Editor>
             <label htmlFor="response">Response</label>
             <textarea
                 cols="30"
@@ -142,3 +144,8 @@ const DetailIntents = () => {
 };
 
 export default DetailIntents;
+
+//             type="text"
+//             value={detailIntent.tag}
+//             onChange={handleChangeInput}
+//             // onFocus={handleChangeTag}

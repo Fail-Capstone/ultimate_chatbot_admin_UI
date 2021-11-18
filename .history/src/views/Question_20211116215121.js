@@ -69,7 +69,7 @@ const Question = () => {
                 </button>
             </div>
             <div className="flex h-full">
-                <div className="flex-1 flex w-[50%]">
+                <div className="flex-1 flex">
                     <div className="bg-white flex-1 rounded-[5px] p-[10px] overflow-auto">
                         {questions.map((question, index) => (
                             <QuestionItem
@@ -80,7 +80,7 @@ const Question = () => {
                         ))}
                     </div>
                 </div>
-                <div className="flex-1 ml-[20px] flex flex-col w-[50%]">
+                <div className="flex-1 ml-[20px] flex flex-col">
                     <span className="text-gray-700">Select tag</span>
                     <select
                         className="block w-full mt-1 flex-1 overflow-auto"

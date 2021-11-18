@@ -1,14 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { IntentContext } from "contexts/IntentContext";
-import axios from "axios";
-import { apiUrl } from "variables.js";
-
-// import { Editor, EditorState } from "draft-js";
-// import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
-const DetailIntents = () => {
+import {ChangeToSlug} from "views/DetailIntents"
+const AddIntent = () => {
     const [detailIntent, setDetailIntents] = useState({
         name: "",
         tag: "",
@@ -16,22 +10,17 @@ const DetailIntents = () => {
         response: [],
     });
 
-    const { id } = useParams();
-
     //context
-    const { updatedIntent } = useContext(IntentContext);
+    const { addIntent } = useContext(IntentContext);
 
-    useEffect(() => {
-        const getIntent = async () => {
-            try {
-                const response = await axios.get(`${apiUrl}/intents/${id}`);
-                setDetailIntents(response.data.intent);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        getIntent();
-    }, [id]);
+    const onAccept = async () => {
+        const response = await addIntent(detailIntent);
+        if (response.success) {
+            alert("Intent added successfully");
+        } else {
+            alert("Intent not added");
+        }
+    };
 
     const handleChangeInput = (e) => {
         setDetailIntents((prevState) => ({
@@ -51,16 +40,7 @@ const DetailIntents = () => {
             [e.target.name]: e.target.value.split(","),
         }));
     };
-    const onAccept = async () => {
-        const response = await updatedIntent(detailIntent);
-        if (response.success) {
-            alert("Intent updated successfully");
-        } else {
-            alert("Intent not updated");
-        }
-    };
-
-    const ChangeToSlug = (text) => {
+    function ChangeToSlug(text) {
         var slug;
         slug = text.toLowerCase();
         slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
@@ -82,7 +62,7 @@ const DetailIntents = () => {
         slug = "@" + slug + "@";
         slug = slug.replace(/\@\-|\-\@|\@/gi, "");
         return slug;
-    };
+    }
     const handleChangeTag = (e) => {
         setDetailIntents((prevState) => ({
             ...prevState,
@@ -108,17 +88,17 @@ const DetailIntents = () => {
             />
             <label htmlFor="patterns">Patterns</label>
             <textarea
+                name="patterns"
                 cols="30"
                 rows="10"
-                name="patterns"
                 value={detailIntent.patterns}
                 onChange={handleChangePattern}
             ></textarea>
             <label htmlFor="response">Response</label>
             <textarea
+                name="response"
                 cols="30"
                 rows="10"
-                name="response"
                 value={detailIntent.response}
                 onChange={handleChangeResponse}
             ></textarea>
@@ -127,7 +107,7 @@ const DetailIntents = () => {
                     className="border-[1px] border-solid rounded-[3px] mr-4 px-[20px] py-[10px] bg-[#fff] hover:bg-[#282c31] hover:text-white"
                     onClick={onAccept}
                 >
-                    Update
+                    Accept
                 </button>
                 <NavLink
                     exact
@@ -141,4 +121,4 @@ const DetailIntents = () => {
     );
 };
 
-export default DetailIntents;
+export default AddIntent;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import React, { useState, useEffect, useContext, useRef } from "react";
+import { useParams, NavLink, Redirect } from "react-router-dom";
 import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
 
-// import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState } from "draft-js";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -55,6 +55,7 @@ const DetailIntents = () => {
         const response = await updatedIntent(detailIntent);
         if (response.success) {
             alert("Intent updated successfully");
+            Redirect
         } else {
             alert("Intent not updated");
         }

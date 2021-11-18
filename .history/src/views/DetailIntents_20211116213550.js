@@ -3,11 +3,6 @@ import { useParams, NavLink } from "react-router-dom";
 import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
-
-// import { Editor, EditorState } from "draft-js";
-// import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
 const DetailIntents = () => {
     const [detailIntent, setDetailIntents] = useState({
         name: "",
@@ -39,6 +34,12 @@ const DetailIntents = () => {
             [e.target.name]: e.target.value,
         }));
     };
+    const handleChangeTag = (e) => {
+        setDetailIntents((prevState) => ({
+            ...prevState,
+            [e.target.name]: ChangeToSlug(detailIntent.name),
+        }));
+    };
     const handleChangePattern = (e) => {
         setDetailIntents((prevState) => ({
             ...prevState,
@@ -51,16 +52,8 @@ const DetailIntents = () => {
             [e.target.name]: e.target.value.split(","),
         }));
     };
-    const onAccept = async () => {
-        const response = await updatedIntent(detailIntent);
-        if (response.success) {
-            alert("Intent updated successfully");
-        } else {
-            alert("Intent not updated");
-        }
-    };
 
-    const ChangeToSlug = (text) => {
+    function ChangeToSlug(text) {
         var slug;
         slug = text.toLowerCase();
         slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
@@ -82,43 +75,41 @@ const DetailIntents = () => {
         slug = "@" + slug + "@";
         slug = slug.replace(/\@\-|\-\@|\@/gi, "");
         return slug;
-    };
-    const handleChangeTag = (e) => {
-        setDetailIntents((prevState) => ({
-            ...prevState,
-            [e.target.name]: ChangeToSlug(detailIntent.name),
-        }));
+    }
+    const onAccept = async () => {
+        const response = await updatedIntent(detailIntent);
+        if (response.success) {
+            alert("Intent updated successfully");
+        } else {
+            alert("Intent not updated");
+        }
     };
     return (
         <>
-            <label htmlFor="name">Name</label>
+            <label>Name</label>
             <input
                 type="text"
-                name="name"
                 value={detailIntent.name}
                 onChange={handleChangeInput}
             />
-            <label htmlFor="tag">Tag</label>
+            <label>Tag</label>
             <input
                 type="text"
-                name="tag"
                 value={detailIntent.tag}
-                onChange={handleChangeInput}
-                onFocus={handleChangeTag}
+                // onChange={handleChangeInput}
+                onClick={handleChangeTag}
             />
-            <label htmlFor="patterns">Patterns</label>
+            <label>Patterns</label>
             <textarea
                 cols="30"
                 rows="10"
-                name="patterns"
                 value={detailIntent.patterns}
                 onChange={handleChangePattern}
             ></textarea>
-            <label htmlFor="response">Response</label>
+            <label>Response</label>
             <textarea
                 cols="30"
                 rows="10"
-                name="response"
                 value={detailIntent.response}
                 onChange={handleChangeResponse}
             ></textarea>

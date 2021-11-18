@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, NavLink } from "react-router-dom";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
-
-// import { Editor, EditorState } from "draft-js";
-// import { Editor } from "react-draft-wysiwyg";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const DetailIntents = () => {
     const [detailIntent, setDetailIntents] = useState({
@@ -59,7 +57,6 @@ const DetailIntents = () => {
             alert("Intent not updated");
         }
     };
-
     const ChangeToSlug = (text) => {
         var slug;
         slug = text.toLowerCase();
@@ -82,7 +79,7 @@ const DetailIntents = () => {
         slug = "@" + slug + "@";
         slug = slug.replace(/\@\-|\-\@|\@/gi, "");
         return slug;
-    };
+    }
     const handleChangeTag = (e) => {
         setDetailIntents((prevState) => ({
             ...prevState,
@@ -142,3 +139,8 @@ const DetailIntents = () => {
 };
 
 export default DetailIntents;
+
+//             type="text"
+//             value={detailIntent.tag}
+//             onChange={handleChangeInput}
+//             // onFocus={handleChangeTag}

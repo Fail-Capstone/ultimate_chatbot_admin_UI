@@ -4,7 +4,7 @@ import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
 
-// import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState } from "draft-js";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 

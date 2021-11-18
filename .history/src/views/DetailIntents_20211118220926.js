@@ -4,11 +4,14 @@ import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
 
-// import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState } from "draft-js";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const DetailIntents = () => {
+    const [editorState, setEditorState] = useState(() =>
+        EditorState.createEmpty()
+    );
     const [detailIntent, setDetailIntents] = useState({
         name: "",
         tag: "",
@@ -50,6 +53,7 @@ const DetailIntents = () => {
             ...prevState,
             [e.target.name]: e.target.value.split(","),
         }));
+        console.log(detailIntent.response);
     };
     const onAccept = async () => {
         const response = await updatedIntent(detailIntent);
@@ -91,6 +95,10 @@ const DetailIntents = () => {
     };
     return (
         <>
+            <Editor
+                editorState={detailIntent.response}
+                onChange={handleChangeResponse}
+            />
             <label htmlFor="name">Name</label>
             <input
                 type="text"

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
 
-// import { Editor, EditorState } from "draft-js";
+import { Editor, EditorState } from "draft-js";
 // import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
@@ -59,7 +59,12 @@ const DetailIntents = () => {
             alert("Intent not updated");
         }
     };
-
+    const handleChangeEditor = (editorState) => {
+        setDetailIntents((prevState) => ({
+            ...prevState,
+            response: editorState,
+        }));
+    };
     const ChangeToSlug = (text) => {
         var slug;
         slug = text.toLowerCase();
@@ -91,6 +96,7 @@ const DetailIntents = () => {
     };
     return (
         <>
+            <Editor editorState={editorState} onChange={setEditorState} />;
             <label htmlFor="name">Name</label>
             <input
                 type="text"
@@ -107,6 +113,14 @@ const DetailIntents = () => {
                 onFocus={handleChangeTag}
             />
             <label htmlFor="patterns">Patterns</label>
+            {/* <Editor
+                wrapperClassName="wrapper-class"
+                editorClassName="editor-class"
+                toolbarClassName="toolbar-class"
+                name="patterns"
+                value={detailIntent.patterns}
+                onChange={handleChangePattern}
+            /> */}
             <textarea
                 cols="30"
                 rows="10"
@@ -142,3 +156,8 @@ const DetailIntents = () => {
 };
 
 export default DetailIntents;
+
+//             type="text"
+//             value={detailIntent.tag}
+//             onChange={handleChangeInput}
+//             // onFocus={handleChangeTag}
