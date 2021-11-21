@@ -4,7 +4,6 @@ import {
     ADD_INTENT,
     DELETE_INTENT,
     UPDATE_INTENT,
-    FIND_INTENT,
 } from "variables.js";
 
 export const IntentReducer = (state, action) => {
@@ -37,9 +36,6 @@ export const IntentReducer = (state, action) => {
                     (intent) => intent._id !== payload
                 ),
             };
-
-        // case FIND_INTENT:
-        //     return { ...state, intent: payload };
 
         case UPDATE_INTENT:
             const newIntents = state.intents.map((intent) =>

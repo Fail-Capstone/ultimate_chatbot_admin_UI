@@ -1,4 +1,4 @@
-import { createContext, useReducer, useEffect } from "react";
+import { createContext, useReducer } from "react";
 import { IntentReducer } from "reducers/IntentReducer";
 import {
     apiUrl,
@@ -7,7 +7,6 @@ import {
     ADD_INTENT,
     DELETE_INTENT,
     UPDATE_INTENT,
-    FIND_INTENT,
 } from "variables.js";
 import axios from "axios";
 

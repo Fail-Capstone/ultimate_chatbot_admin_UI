@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { IntentContext } from "contexts/IntentContext";

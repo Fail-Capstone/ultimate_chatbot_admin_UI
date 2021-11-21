@@ -9,6 +9,11 @@
         --main-bg: #212427;
         --second-bg: #282c31;
         --text-color: #cacaca;
+        --size: 150px;
+        --clr-bg: #272324;
+        --clr1: #212427;
+        --clr2: #B93838;
+        --clr3: #282c31;
     }
     * {
         padding: 0px;
@@ -75,16 +80,55 @@
     .message {
         @apply bg-[#ddd] rounded-[10px] px-[10px] py-[5px] inline-block;
     }
-    .question-item{
+    .question-item {
         @apply mb-[10px] inline-block w-full;
     }
-    .question-item .question{
+    .question-item .question {
         @apply bg-[#212427] rounded-[10px] px-[10px] py-[5px] inline-block text-white;
     }
-    .question-item .tag{
+    .question-item .tag {
         @apply bg-[#282c31] rounded-[10px] px-[10px] py-[5px] inline-block text-white text-[14px] opacity-[0.8] font-thin;
     }
-    .question-item.selected .tag,.question-item.selected .question{
+    .question-item.selected .tag,
+    .question-item.selected .question {
         @apply bg-[#1E90FF];
+    }
+    .spinner {
+        --animation-duration: 650ms;
+        position: relative;
+        width: var(--size);
+        height: var(--size);
+    }
+    .spinner .spinner-item {
+        position: absolute;
+        width: var(--item-size);
+        height: var(--item-size);
+        top: calc(50% - var(--item-size) / 2);
+        left: calc(50% - var(--item-size) / 2);
+        border: 4px solid transparent;
+        border-left: 4px solid var(--clr-spinner);
+        border-right: 4px solid var(--clr-spinner);
+        border-radius: 50%;
+        animation: spinner2 var(--animation-duration) linear infinite;
+    }
+    @keyframes spinner2 {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    .spinner .spinner-item:nth-of-type(1) {
+        --item-size: var(--size);
+        --clr-spinner: var(--clr1);
+        border-top: 4px solid var(--clr1);
+    }
+    .spinner .spinner-item:nth-of-type(2) {
+        --item-size: calc(var(--size) - 15px);
+        --clr-spinner: var(--clr2);
+        border-bottom: 4px solid var(--clr2);
+    }
+    .spinner .spinner-item:nth-of-type(3) {
+        --item-size: calc(var(--size) - 30px);
+        --clr-spinner: var(--clr3);
+        border-top: 4px solid var(--clr3);
     }
 }

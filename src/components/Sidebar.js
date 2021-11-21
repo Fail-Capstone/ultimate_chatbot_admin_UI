@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { NavLink } from "react-router-dom";
 import Logo from "assets/images/iconbot.png";
@@ -21,7 +21,7 @@ const Sidebar = ({active}) => {
                     activeClassName="active"
                 >
                     <box-icon
-                        name="home"
+                        name="chat"
                         type="solid"
                         color="#ffffff"
                         class="mr-[5px]"
@@ -35,7 +35,7 @@ const Sidebar = ({active}) => {
                     activeClassName="active"
                 >
                     <box-icon
-                        name="home"
+                        name="pencil"
                         type="solid"
                         color="#ffffff"
                         class="mr-[5px]"
@@ -44,8 +44,8 @@ const Sidebar = ({active}) => {
                 </NavLink>
             </div>
             <div className="logout">
-                <button onClick={logout}>
-                    <box-icon name="log-out" color="#ffffff"></box-icon>
+                <button onClick={logout} className="hover:bg-white hover:text-black text-white p-[5px] rounded-[5px] flex items-center">
+                    <box-icon name="log-out" class="fill-current"></box-icon>
                 </button>
             </div>
         </div>

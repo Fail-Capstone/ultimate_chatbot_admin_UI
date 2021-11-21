@@ -69,7 +69,7 @@ const AuthContextProvider = ({ children }) => {
         } catch (error) {
             if (error.response) {
                 return error.response.data;
-            } else return { success: false, message: error.message };
+            } else return { success: false, message: "Internal server error" };
         }
     };
 

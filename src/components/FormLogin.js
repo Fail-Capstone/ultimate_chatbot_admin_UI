@@ -2,10 +2,11 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import Modal from "components/Modal";
 import AlertMessage from "components/AlertMessage";
+import Validator from "assets/js/validator";
 
 const FormLogin = () => {
     const [isShowing, setIsShowing] = useState(false);
-    
+
     function toggle() {
         setIsShowing(!isShowing);
     }
@@ -33,53 +34,74 @@ const FormLogin = () => {
             if (loginData.success) {
                 // history.push("/");
             } else {
-                setAlert({ message: loginData.message, type: "danger" });
-                toggle();
+                console.log(loginData.message);
+                if (loginData.message) {
+                    setAlert({
+                        message: loginData.message,
+                        type: "danger",
+                    });
+                    toggle();
+                } else {
+                    setAlert({
+                        message: "Internal server error",
+                        type: "danger",
+                    });
+                    toggle();
+                }
             }
         } catch (error) {
             console.error(error);
         }
     };
+
+    Validator('#form-login');
+
     return (
-        <div>
+        <div className="bg-[#282c31] p-[20px] min-w-[30%] rounded-[5px]">
             <Modal isShowing={isShowing}>
                 <AlertMessage hide={toggle} info={alert} />
             </Modal>
-            <h3 className="heading">Login</h3>
-            <p className="desc">❤️❤️❤️</p>
-            <div className="spacer"></div>
+            <form id="form-login">
+            <h3 className="font-semibold text-[26px] text-center uppercase text-[#ffff61]">
+                Login
+            </h3>
+            <div className="h-[20px]"></div>
             <div className="form-group">
-                <label className="form-label">Username</label>
                 <input
                     id="username"
                     name="username"
                     rules="required"
                     type="text"
-                    placeholder="Enter username"
-                    className="form-control"
+                    placeholder="Username"
+                    className="form-control bg-transparent px-[10px] py-[5px] rounded-[30px] text-[18px] text-white border-[#ffff61] outline-none focus:border-purple-500 text-center border-[2px]"
                     value={username}
                     onChange={onChangeLoginForm}
                 />
                 <span className="form-message"></span>
             </div>
-
+            <div className="h-[10px]"></div>
             <div className="form-group">
-                <label className="form-label">Password</label>
                 <input
+                    className="form-control bg-transparent px-[10px] py-[5px] rounded-[30px] text-[18px] text-white border-[#ffff61] outline-none focus:border-purple-500 text-center border-[2px] mb-[20px]"
                     id="password"
                     name="password"
                     rules="required|min:3"
                     type="password"
-                    placeholder="Enter password"
-                    className="form-control"
+                    placeholder="Password"
                     value={password}
                     onChange={onChangeLoginForm}
                 />
                 <span className="form-message"></span>
             </div>
-            <button className="form-submit" onClick={onSubmitLoginForm}>
-                Login
-            </button>
+            <div className="w-full text-center">
+                <button
+                    className="form-submit bg-[#ffff61] hover:bg-purple-500 hover:text-white hover:border-purple-500 min-w-[200px] px-[15px] py-[10px] rounded-[30px] text-[18px] text-black border-[#ffff61] outline-none text-center border-[2px] mb-[20px]"
+                    onClick={onSubmitLoginForm}
+                >
+                    Login
+                </button>
+            </div>
+            </form>
         </div>
     );
 };

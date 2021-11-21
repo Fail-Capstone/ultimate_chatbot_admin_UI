@@ -1,5 +1,5 @@
 import { AuthContext } from "contexts/AuthContext";
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import Logo from "assets/images/iconbot.png";
 const Navbar = ({ toggle }) => {
     const {
@@ -10,9 +10,14 @@ const Navbar = ({ toggle }) => {
     const activeSidebar = () => {
         toggle();
     };
+    const [isActive, setIsActive] = useState(false);
+    const hoverSubMenu = () => {
+        setIsActive(!isActive);
+    };
+
     return (
         <div className="navbar">
-            <div className="navbar-left flex items-center">
+            <div className="navbar-left flex items-center flex-1">
                 <div
                     className="hover:bg-white hover:text-black text-white p-[5px] rounded-[5px] flex items-center"
                     onClick={activeSidebar}
@@ -20,7 +25,7 @@ const Navbar = ({ toggle }) => {
                     <box-icon name="menu" class="fill-current"></box-icon>
                 </div>
 
-                <div className="search-form flex relative items-center ml-3">
+                <div className="search-form flex relative items-center mx-3 flex-1">
                     <input
                         type="search"
                         name=""
@@ -31,13 +36,6 @@ const Navbar = ({ toggle }) => {
                         rotate="90"
                         color="#ffffff"
                         class="absolute ml-3"
-                    ></box-icon>
-                </div>
-                <div className="notify ml-3">
-                    <box-icon
-                        type="solid"
-                        name="bell"
-                        color="#ffffff"
                     ></box-icon>
                 </div>
             </div>
@@ -51,11 +49,40 @@ const Navbar = ({ toggle }) => {
                         src={Logo}
                         alt=""
                     />
-                    <box-icon
-                        name="chevron-down"
-                        color="#ffffff"
-                        class="ml-1"
-                    ></box-icon>
+                    <div
+                        className="flex relative"
+                        onClick={hoverSubMenu}
+                    >
+                        <box-icon
+                            name="chevron-down"
+                            color="#ffffff"
+                            class="ml-1"
+                        ></box-icon>
+                        <div
+                            className={
+                                isActive
+                                    ? `flex flex-col absolute top-[30px] right-0 min-w-[200px] rounded-[5px] bg-[#282c31] py-[10px]`
+                                    : `hidden`
+                            }
+                        >
+                            <div className="px-[10px] py-[5px] flex items-center">
+                                <box-icon
+                                    name="key"
+                                    color="#ffffff"
+                                    class="mr-[5px]"
+                                ></box-icon>
+                                Change password
+                            </div>
+                            <div className="px-[10px] py-[5px] flex items-center">
+                                <box-icon
+                                    name="log-out"
+                                    color="#ffffff"
+                                    class="mr-[5px]"
+                                ></box-icon>
+                                Log out
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

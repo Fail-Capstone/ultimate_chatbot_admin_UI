@@ -16,7 +16,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     const {
         authState: { authLoading, isAuthenticated },
     } = useContext(AuthContext);
-    if (authLoading) return <Spinner />;
+    if (authLoading) return <div className="h-screen"><Spinner /></div>;
     return (
         <Route
             render={(props) =>

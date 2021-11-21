@@ -8,4 +8,3 @@ export const INTENTS_LOADED_FAIL = "INTENTS_LOADED_FAIL";
 export const ADD_INTENT = "ADD_INTENT";
 export const DELETE_INTENT = "DELETE_INTENT";
 export const UPDATE_INTENT = "UPDATE_INTENT";
-export const FIND_INTENT = "FIND_INTENT";

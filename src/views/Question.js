@@ -40,7 +40,7 @@ const Question = () => {
     const handleTagChange = (e) => {
         setSelectedTag(e.target.value);
     };
-    const handleAddPattern = async (pattern) => {
+    const handleAddPattern = async () => {
         const newPattern = {
             tag: selectedTag,
             pattern: selectedQuestion,
@@ -48,13 +48,29 @@ const Question = () => {
         setSelectedQuestion([]);
         setSelectedTag("");
         try {
-            const response = await axios.post(`${apiUrl}/intents/patterns`, newPattern)
+            const response = await axios.post(
+                `${apiUrl}/intents/patterns`,
+                newPattern
+            );
             console.log(response.data);
         } catch (error) {
             console.log(error.response.data);
         }
     };
-    console.log(selectedQuestion, selectedTag);
+    const handleDeleteQuestions = async () => {
+        const deleteQuestion = {
+            questions: selectedQuestion,
+        };
+        try {
+            const response = await axios.delete(`${apiUrl}/questions`, {
+                data: deleteQuestion,
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response.data);
+        }
+        getQuestion();
+    };
     return (
         <>
             <div className="flex justify-end mb-[15px]">
@@ -64,12 +80,21 @@ const Question = () => {
                 >
                     Load
                 </button>
-                <button className="border-[1px] border-solid rounded-[3px] mr-4 px-[20px] py-[10px] bg-[#fff] hover:bg-[#282c31] hover:text-white" onClick={handleAddPattern}>
+                <button
+                    className="border-[1px] border-solid rounded-[3px] mr-4 px-[20px] py-[10px] bg-[#fff] hover:bg-[#282c31] hover:text-white"
+                    onClick={handleAddPattern}
+                >
                     Add patterns
+                </button>
+                <button
+                    className="border-[1px] border-solid rounded-[3px] mr-4 px-[20px] py-[10px] bg-[#fff] hover:bg-[#282c31] hover:text-white"
+                    onClick={handleDeleteQuestions}
+                >
+                    Delete questions
                 </button>
             </div>
             <div className="flex h-full">
-                <div className="flex-1 flex w-[50%]">
+                <div className="flex-1 flex w-[50%] overflow-auto">
                     <div className="bg-white flex-1 rounded-[5px] p-[10px] overflow-auto">
                         {questions.map((question, index) => (
                             <QuestionItem

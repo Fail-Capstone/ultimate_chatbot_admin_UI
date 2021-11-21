@@ -9,7 +9,7 @@ const Auth = ({ authRoute }) => {
         authState: { authLoading, isAuthenticated },
     } = useContext(AuthContext);
     if (authLoading) {
-        return Spinner;
+        return <div className="h-screen"><Spinner /></div>;
     } else if (isAuthenticated) return <Redirect to="/" />;
     else return <>{authRoute === "login" && <Login />}</>;
 };
