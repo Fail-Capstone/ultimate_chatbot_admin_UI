@@ -10,8 +10,7 @@ const IntentsItem = (props) => {
     return (
         <div className="border-b-[1px] border-[#dadada] border-solid mb-[10px] pb-[10px] flex justify-between">
             <span className="flex-1">{props.value.name}</span>
-            <div className="flex justify-between items-center min-w-[15%]">
-                <span className="text-[#1000ff] font-bold mx-2">Train</span>
+            <div className="flex justify-between items-center min-w-[7%]">
                 <NavLink to={`intents/edit/${props.value._id}`}>
                     <box-icon
                         name="edit"

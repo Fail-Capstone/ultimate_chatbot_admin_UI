@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import QuestionItem from "components/QuestionItem";
 import axios from "axios";
+import Modal from "components/Modal";
+import AlertMessage from "components/AlertMessage";
 import { apiUrl } from "variables.js";
 
 const Question = () => {
@@ -8,6 +10,11 @@ const Question = () => {
     const [tags, setTags] = useState([]);
     const [selectedQuestion, setSelectedQuestion] = useState([]);
     const [selectedTag, setSelectedTag] = useState([]);
+    const [isShowing, setIsShowing] = useState(false);
+    const [alert, setAlert] = useState(null);
+    function toggle() {
+        setIsShowing(!isShowing);
+    }
     const getQuestion = async () => {
         try {
             const response = await axios.get(`${apiUrl}/questions`);
@@ -41,38 +48,73 @@ const Question = () => {
         setSelectedTag(e.target.value);
     };
     const handleAddPattern = async () => {
-        const newPattern = {
-            tag: selectedTag,
-            pattern: selectedQuestion,
-        };
-        setSelectedQuestion([]);
-        setSelectedTag("");
-        try {
-            const response = await axios.post(
-                `${apiUrl}/intents/patterns`,
-                newPattern
-            );
-            console.log(response.data);
-        } catch (error) {
-            console.log(error.response.data);
+        if (selectedTag.length === 0 || selectedQuestion.length === 0) {
+            setAlert({
+                message: "Need at least one tag and one question",
+                submessage: "Please try again",
+                type: "error",
+            });
+            toggle();
+        } else {
+            const newPattern = {
+                tag: selectedTag,
+                pattern: selectedQuestion,
+            };
+            setSelectedQuestion([]);
+            setSelectedTag("");
+            try {
+                const response = await axios.post(
+                    `${apiUrl}/intents/patterns`,
+                    newPattern
+                );
+                if (response.data.success) {
+                    setAlert({
+                        message: "Question has been added successfully",
+                        submessage: "Click x button to close",
+                        type: "happy-heart-eyes",
+                    });
+                    toggle();
+                } else {
+                    setAlert({
+                        message: "Something went wrong",
+                        submessage: "Please try again",
+                        type: "error",
+                    });
+                    toggle();
+                }
+            } catch (error) {
+                console.log(error.response.data);
+            }
         }
     };
     const handleDeleteQuestions = async () => {
-        const deleteQuestion = {
-            questions: selectedQuestion,
-        };
-        try {
-            const response = await axios.delete(`${apiUrl}/questions`, {
-                data: deleteQuestion,
+        if (selectedQuestion.length === 0) {
+            setAlert({
+                message: "Need to select at least one question to delete",
+                submessage: "Select a question to delete",
+                type: "error",
             });
-            console.log(response.data);
-        } catch (error) {
-            console.log(error.response.data);
+            toggle();
+        } else {
+            const deleteQuestion = {
+                questions: selectedQuestion,
+            };
+            try {
+                const response = await axios.delete(`${apiUrl}/questions`, {
+                    data: deleteQuestion,
+                });
+                console.log(response.data);
+            } catch (error) {
+                console.log(error.response.data);
+            }
+            getQuestion();
         }
-        getQuestion();
     };
     return (
         <>
+            <Modal isShowing={isShowing}>
+                <AlertMessage hide={toggle} info={alert} />
+            </Modal>
             <div className="flex justify-end mb-[15px]">
                 <button
                     className="border-[1px] border-solid rounded-[3px] mr-4 px-[20px] py-[10px] bg-[#fff] hover:bg-[#282c31] hover:text-white"

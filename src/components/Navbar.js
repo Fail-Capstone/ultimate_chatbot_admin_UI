@@ -1,5 +1,5 @@
 import { AuthContext } from "contexts/AuthContext";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import Logo from "assets/images/iconbot.png";
 const Navbar = ({ toggle }) => {
     const {
@@ -10,10 +10,10 @@ const Navbar = ({ toggle }) => {
     const activeSidebar = () => {
         toggle();
     };
-    const [isActive, setIsActive] = useState(false);
-    const hoverSubMenu = () => {
-        setIsActive(!isActive);
-    };
+    // const [isActive, setIsActive] = useState(false);
+    // const hoverSubMenu = () => {
+    //     setIsActive(!isActive);
+    // };
 
     return (
         <div className="navbar">
@@ -49,7 +49,7 @@ const Navbar = ({ toggle }) => {
                         src={Logo}
                         alt=""
                     />
-                    <div
+                    {/* <div
                         className="flex relative"
                         onClick={hoverSubMenu}
                     >
@@ -82,7 +82,7 @@ const Navbar = ({ toggle }) => {
                                 Log out
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
