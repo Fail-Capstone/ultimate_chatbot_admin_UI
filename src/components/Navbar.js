@@ -25,7 +25,7 @@ const Navbar = ({ toggle }) => {
                     <box-icon name="menu" class="fill-current"></box-icon>
                 </div>
 
-                <div className="search-form flex relative items-center mx-3 flex-1">
+                {/* <div className="search-form flex relative items-center mx-3 flex-1">
                     <input
                         type="search"
                         name=""
@@ -37,7 +37,7 @@ const Navbar = ({ toggle }) => {
                         color="#ffffff"
                         class="absolute ml-3"
                     ></box-icon>
-                </div>
+                </div> */}
             </div>
             <div className="navbar-right flex items-center">
                 <div className="user_name text-white font-medium">

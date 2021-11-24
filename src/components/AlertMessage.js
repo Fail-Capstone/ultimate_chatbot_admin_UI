@@ -1,6 +1,18 @@
 import React from "react";
-
 const AlertMessage = ({ hide, info }) => {
+    const actionOnClick = () => {
+        hide();
+        switch (info.action) {
+            case "redirect":
+                window.location.href = info.url;
+                break;
+            case "load":
+                window.location.reload();
+                break;
+            default:
+                break;
+        }
+    };
     return info === null ? null : (
         <div className="flex flex-col p-8 bg-white shadow-md hover:shadow-lg rounded-2xl items-center">
             <div className="flex items-center justify-between">
@@ -22,7 +34,7 @@ const AlertMessage = ({ hide, info }) => {
                     </div>
                 </div>
             </div>
-            <button onClick={hide} className="absolute right-2 top-2">
+            <button onClick={actionOnClick} className="absolute right-2 top-2">
                 <box-icon type="solid" name="x-circle"></box-icon>
             </button>
         </div>

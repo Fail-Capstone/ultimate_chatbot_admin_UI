@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Logo from "assets/images/iconbot.png";
 
 const Sidebar = ({ active }) => {
@@ -45,7 +45,7 @@ const Sidebar = ({ active }) => {
             </div>
             <div className="flex flex-col w-full justify-center">
                 <div className="flex mb-[10px] justify-center">
-                    <a class="icon facebook relative text-black hover:text-white" href="https://www.facebook.com/kimdat546" target="_blank" rel="noopener noreferrer">
+                    <a className="icon facebook relative text-black hover:text-white" href="https://www.facebook.com/kimdat546" target="_blank" rel="noopener noreferrer">
                         <div class="tooltip">Nguyen Dat</div>
                         <span className="flex items-center">
                             <box-icon

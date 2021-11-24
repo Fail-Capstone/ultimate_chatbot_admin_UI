@@ -4,6 +4,8 @@ import { useParams, NavLink } from "react-router-dom";
 import { IntentContext } from "contexts/IntentContext";
 import axios from "axios";
 import { apiUrl } from "variables.js";
+import Modal from "components/Modal";
+import AlertMessage from "components/AlertMessage";
 
 // import { Editor, EditorState } from "draft-js";
 // import { Editor } from "react-draft-wysiwyg";
@@ -21,6 +23,12 @@ const DetailIntents = () => {
 
     //context
     const { updatedIntent } = useContext(IntentContext);
+
+    const [isShowing, setIsShowing] = useState(false);
+    const [alert, setAlert] = useState(null);
+    function toggle() {
+        setIsShowing(!isShowing);
+    }
 
     useEffect(() => {
         const getIntent = async () => {
@@ -55,9 +63,22 @@ const DetailIntents = () => {
     const onAccept = async () => {
         const response = await updatedIntent(detailIntent);
         if (response.success) {
-            alert("Intent updated successfully");
+            setAlert({
+                message: "Intent updated successfully",
+                submessage: "Click x button to close",
+                type: "happy-heart-eyes",
+                action: "redirect",
+                url: "/intents",
+            });
+            toggle();
         } else {
-            alert("Intent not updated");
+            setAlert({
+                message: "Intent not updated",
+                submessage: "Please try again",
+                type: "error",
+                action: "load",
+            });
+            toggle();
         }
     };
 
@@ -92,6 +113,9 @@ const DetailIntents = () => {
     };
     return (
         <>
+            <Modal isShowing={isShowing}>
+                <AlertMessage hide={toggle} info={alert} />
+            </Modal>
             <label htmlFor="name">Name</label>
             <input
                 type="text"

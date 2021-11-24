@@ -2,6 +2,9 @@
 import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { IntentContext } from "contexts/IntentContext";
+import Modal from "components/Modal";
+import AlertMessage from "components/AlertMessage";
+
 const AddIntent = () => {
     const [detailIntent, setDetailIntents] = useState({
         name: "",
@@ -13,12 +16,31 @@ const AddIntent = () => {
     //context
     const { addIntent } = useContext(IntentContext);
 
+    const [isShowing, setIsShowing] = useState(false);
+    const [alert, setAlert] = useState(null);
+    function toggle() {
+        setIsShowing(!isShowing);
+    }
+
     const onAccept = async () => {
         const response = await addIntent(detailIntent);
         if (response.success) {
-            alert("Intent added successfully");
+            setAlert({
+                message: "Intent added successfully",
+                submessage: "Click x button to close",
+                type: "happy-heart-eyes",
+                action: "redirect",
+                url: "/intents",
+            });
+            toggle();
         } else {
-            alert("Intent not added");
+            setAlert({
+                message: "Intent not added",
+                submessage: "Please try again",
+                type: "error",
+                action: "load",
+            });
+            toggle();
         }
     };
 
@@ -62,7 +84,7 @@ const AddIntent = () => {
         slug = "@" + slug + "@";
         slug = slug.replace(/\@\-|\-\@|\@/gi, "");
         return slug;
-    }
+    };
     const handleChangeTag = (e) => {
         setDetailIntents((prevState) => ({
             ...prevState,
@@ -71,6 +93,9 @@ const AddIntent = () => {
     };
     return (
         <>
+            <Modal isShowing={isShowing}>
+                <AlertMessage hide={toggle} info={alert} />
+            </Modal>
             <label htmlFor="name">Name</label>
             <input
                 type="text"

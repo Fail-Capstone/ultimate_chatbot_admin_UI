@@ -44,6 +44,11 @@ const Question = () => {
             setSelectedQuestion([...selectedQuestion, question]);
         }
     };
+    // const handlePattern = (questionsSelected) => {
+    //     questionsSelected.forEach((question) => {
+    //         setQuestions(questions.filter((item) => item !== question));
+    //     });
+    // };
     const handleTagChange = (e) => {
         setSelectedTag(e.target.value);
     };
@@ -60,18 +65,20 @@ const Question = () => {
                 tag: selectedTag,
                 pattern: selectedQuestion,
             };
-            setSelectedQuestion([]);
-            setSelectedTag("");
+
             try {
                 const response = await axios.post(
                     `${apiUrl}/intents/patterns`,
                     newPattern
                 );
                 if (response.data.success) {
+                    setSelectedQuestion([]);
+                    setSelectedTag("");
                     setAlert({
                         message: "Question has been added successfully",
                         submessage: "Click x button to close",
                         type: "happy-heart-eyes",
+                        action: "load"
                     });
                     toggle();
                 } else {
@@ -79,11 +86,12 @@ const Question = () => {
                         message: "Something went wrong",
                         submessage: "Please try again",
                         type: "error",
+                        action: "load"
                     });
                     toggle();
                 }
             } catch (error) {
-                console.log(error.response.data);
+                console.log(error.response);
             }
         }
     };
@@ -103,7 +111,24 @@ const Question = () => {
                 const response = await axios.delete(`${apiUrl}/questions`, {
                     data: deleteQuestion,
                 });
-                console.log(response.data);
+                if (response.data.success) {
+                    setSelectedQuestion([]);
+                    setAlert({
+                        message: "Questions has been deleted successfully",
+                        submessage: "Click x button to close",
+                        type: "happy-heart-eyes",
+                        action: "load"
+                    });
+                    toggle();
+                } else {
+                    setAlert({
+                        message: "Something went wrong",
+                        submessage: "Please try again",
+                        type: "error",
+                        action: "load"
+                    });
+                    toggle();
+                }
             } catch (error) {
                 console.log(error.response.data);
             }
