@@ -141,12 +141,12 @@ const Question = () => {
                 <AlertMessage hide={toggle} info={alert} />
             </Modal>
             <div className="flex justify-end mb-[15px]">
-                <button
+                {/* <button
                     className="border-[1px] border-solid rounded-[3px] mr-4 px-[20px] py-[10px] bg-[#fff] hover:bg-[#282c31] hover:text-white"
                     onClick={getQuestion}
                 >
                     Load
-                </button>
+                </button> */}
                 <button
                     className="border-[1px] border-solid rounded-[3px] mr-4 px-[20px] py-[10px] bg-[#fff] hover:bg-[#282c31] hover:text-white"
                     onClick={handleAddPattern}

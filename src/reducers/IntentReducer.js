@@ -4,6 +4,8 @@ import {
     ADD_INTENT,
     DELETE_INTENT,
     UPDATE_INTENT,
+    TRAIN_INTENT,
+    LOADED_FAIL,
 } from "variables.js";
 
 export const IntentReducer = (state, action) => {
@@ -47,6 +49,16 @@ export const IntentReducer = (state, action) => {
                 intents: newIntents,
             };
 
+        case TRAIN_INTENT:
+            return {
+                ...state,
+                trainLoading: false,
+            };
+        case LOADED_FAIL:
+            return {
+                ...state,
+                trainLoading: true,
+            };
         default:
             return state;
     }

@@ -7,6 +7,9 @@ import {
     ADD_INTENT,
     DELETE_INTENT,
     UPDATE_INTENT,
+    TRAIN_INTENT,
+    apiModel,
+    LOADED_FAIL,
 } from "variables.js";
 import axios from "axios";
 
@@ -18,6 +21,7 @@ const IntentContextProvider = ({ children }) => {
         intent: null,
         intents: [],
         intentsLoading: true,
+        trainLoading: false,
     });
     // Get all intents
     const getIntents = async () => {
@@ -32,6 +36,19 @@ const IntentContextProvider = ({ children }) => {
         } catch (error) {
             dispatch({ type: INTENTS_LOADED_FAIL });
         }
+    };
+
+    // Train intents
+    const trainIntents = async () => {
+        dispatch({
+            type: LOADED_FAIL,
+        });
+        const response = await axios.get(`${apiModel}/train`);
+        console.log(response);
+        dispatch({
+            type: TRAIN_INTENT,
+        });
+        return response.data;
     };
 
     // // Find intent
@@ -98,6 +115,7 @@ const IntentContextProvider = ({ children }) => {
         addIntent,
         updatedIntent,
         deleteIntent,
+        trainIntents,
     };
 
     return (
