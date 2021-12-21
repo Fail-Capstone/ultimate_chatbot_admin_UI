@@ -59,7 +59,7 @@ const AddIntent = () => {
     const handleChangeResponse = (e) => {
         setDetailIntents((prevState) => ({
             ...prevState,
-            [e.target.name]: e.target.value.split(","),
+            [e.target.name]: e.target.value.split(";"),
         }));
     };
     const ChangeToSlug = (text) => {
